@@ -1,0 +1,11 @@
+### 借書 - 小明借「野性的呼喚」
+POST http://localhost:8080/books/borrow?userId=U0001&ISBN=s0001
+
+### 借書 - 測試已被借走的情況(重複借同一本)
+POST http://localhost:8080/books/borrow?userId=U0001&ISBN=s0001
+
+### 借書 - 測試查無會員
+POST http://localhost:8080/books/borrow?userId=U999&ISBN=s0001
+
+### 查看可借閱書籍(借完後 s0001 應該會消失)
+GET http://localhost:8080/books/available

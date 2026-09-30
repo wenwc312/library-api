@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <title>圖書館系統</title>
+    <style>
+        body { font-family: sans-serif; max-width: 600px; margin: 40px auto; }
+        input, button { padding: 6px margin: 4px 0; }
+        #result { margin-top: 10px; color: #333; }
+        ul { padding-left: 20px; }
+        li { margin-bottom: 6px; }
+    </style>
+</head>
+<body>
+
+<h1>圖書館系統</h1>
+
+<h2>借書</h2>
+會員編號: <input type="text" id="borrowUserId">
+書籍ISBN: <input type="text" id="borrowIsbn">
+<button onclick="borrowBook()">借書</button>
+
+<h2>還書</h2>
+會員編號: <input type="text" id="returnUserId">
+書籍ISBN: <input type="text" id="returnIsbn">
+<button onclick="returnBook()">還書</button>
+
+<div id="result"></div>
+
+<h2>可借閱書籍</h2>
+<button onclick="loadAvailableBooks()">重新整理清單</button>
+<ul id="bookList"></ul>
+
+<script>
+    const API_BASE = "/books"
+
+    // 借書
+    function borrowBook(){
+        const userId = document.getElementById("borrowUserId").value;
+        const isbn = document.getElementById("borrowIsbn").value;
+
+        fetch(`${API_BASE}/borrow?userId=${userId}&isbn=${isbn}`,{
+            method: "POST"
+        })
+        .then(response => response.text())
+        .then(message => {
+            document.getElementById("result").innerText = message;
+            loadAvailableBooks(); // 借完自動刷新清單
+        });
+    }
+
+    // 還書
+    function returnBook(){
+        const userId = document.getElementById("returnUserId").value;
+        const isbn = document.getElementById("returnIsbn").value;
+
+        fetch(`${API_BASE}/return?userId=${userId}&isbn=${isbn}`,{
+            method: "POST"
+        })
+        .then(response => response.text())
+        .then(message => {
+            document.getElementById("result").innerText = message;
+            loadAvailableBooks();
+        });
+    }
+
+    // 查看可借閱書籍
+    function loadAvailableBooks(){
+        fetch(`${API_BASE}/available`)
+        .then(response => response.json())
+        .then(books => {
+            const list = document.getElementById("bookList");
+            list.innerHTML = "";
+            books.forEach(book => {
+                const li = document.createElement("li");
+                li.innerText = `${book.name} - ${book.author} (${book.ISBN})`;
+                list.appendChild(li);
+            });
+        });
+    }
+
+    // 頁面一開啟就先載入一次清單
+    loadAvailableBooks();
+</script>
+</body>
+</html>

@@ -1,0 +1,15 @@
+1.借書 ====> POST / books / borrow
+2.還書 ====> POST / books / return
+3.查看可借閱書籍 ====> GET / books / available
+4.搜尋書籍 ====> GET / books / search
+
+GET:用來查資料
+POST:用來改變資料(借書、還書都會改變書的狀態，所以用POST)
+
+● @RestController：告訴 Spring「這個類別的方法回傳的東西，直接變成網頁回應的內容」（不用像傳統網頁還要另外做畫面）
+● @RequestMapping("/books")：這個類別底下所有網址開頭都是 /books
+● @RequestParam：從網址的問號參數（例如 ?keyword=侏儸紀）拿值
+● 建構子注入：LibraryController 需要用到 LibraryService，不用自己 new，Spring 會自動幫你準備好丟進來——這就是 @Service 的用途
+
+405（方法不對）
+400（參數不對）

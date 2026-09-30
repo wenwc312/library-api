@@ -1,0 +1,87 @@
+package org.example.library_api.service;
+
+import org.example.library_api.model.Book;
+import org.example.library_api.model.Member;
+import org.springframework.stereotype.Service;
+
+import java.util.ArrayList;
+import java.util.List;
+
+@Service
+public class LibraryService {
+    private List<Book> allBooks;
+    private List<Member> allMembers;
+
+    public LibraryService() {
+        allBooks = new ArrayList<>();
+        allMembers = new ArrayList<>();
+
+        // 測試資料
+        allBooks.add(new Book("野性的呼喚","john","s0001"));
+        allBooks.add(new Book("侏儸紀公園","mary","s0002"));
+        allBooks.add(new Book("哈利波特","JK","f0001"));
+        allBooks.add(new Book("三國演義","羅貫中","h0001"));
+        allMembers.add(new Member("王小明","U0001"));
+        allMembers.add(new Member("陳大天","U0002"));
+    }
+
+    public void addBook(Book book) {
+        allBooks.add(book);
+    }
+
+    public void addMember(Member member) {
+        allMembers.add(member);
+    }
+
+    public String borrowBook(String userId,String ISBN) {
+        for (Member member : allMembers) {
+            if (member.getUserId().equals(userId)) {
+                for(Book book:allBooks){
+                    if(book.getISBN().equals(ISBN) && !book.isBorrowed()){
+                        book.setBorrowed(true);
+                        member.borrowBook(book);
+                        return "書籍借取完成";
+                    }
+                }
+                return "查無書籍資料或書籍已被借閱";
+            }
+        }
+        return "查無會員資料";
+    }
+
+    public String returnBook(String userId,String ISBN) {
+        for (Member member : allMembers) {
+            if (member.getUserId().equals(userId)) {
+                for (Book book : allBooks) {
+                    if (book.getISBN().equals(ISBN) && book.isBorrowed()) {
+                        book.setBorrowed(false);
+                        member.returnBook(book);
+                        return "歸還書籍成功";
+                    }
+                }
+                return "查無書籍資料或書籍尚未被借閱";
+            }
+        }
+        return "查無會員資料";
+    }
+
+    public List<Book> availableBookList(){
+        List<Book> borrowedList = new ArrayList<>();
+        for (Book book:allBooks){
+            if(!book.isBorrowed()){
+                borrowedList.add(book);
+            }
+        }
+        return borrowedList;
+    }
+
+    public List<Book> searchBook(String keyword) {
+        List<Book> bookList = new ArrayList<>();
+        for (Book book:allBooks){
+            if (book.getName().contains(keyword) || book.getAuthor().contains(keyword) || book.getISBN().contains(keyword)){
+                bookList.add(book);
+            }
+        }
+        return bookList;
+    }
+}
