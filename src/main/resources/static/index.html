@@ -27,6 +27,11 @@
 
 <div id="result"></div>
 
+<h2>查詢會員借閱清單</h2>
+會員編號: <input type="text" id="queryUserId">
+<button onclick="loadBorrowedBooks()">查詢</button>
+<ul id="borrowedList"></ul>
+
 <h2>搜尋書籍</h2>
 關鍵字(書名/作者/ISBN): <input type="text" id="searchKeyword">
 <button onclick="searchBook()">搜尋</button>
@@ -104,6 +109,35 @@
                     list.appendChild(li);
                 });
             }
+        });
+    }
+
+    // 查詢會員借閱清單
+    function loadBorrowedBooks(){
+        const userId = document.getElementById("queryUserId").value;
+        const list = document.getElementById("borrowedList");
+
+        fetch(`${API_BASE}/borrowedByMember?userId=${userId}`)
+        .then(response => {
+            if(response.status === 404) {
+                list.innerHTML = "<li>查無會員資料</li>";
+                return null;
+            }
+            return response.json();
+        })
+        .then(books => {
+            if(books === null) return; // 查無會員，上面已經處理過了
+
+            list.innerHTML = "";
+            if(books.length === 0){
+                list.innerHTML = "<li>目前沒有借閱中的書籍</li>";
+                return;
+            }
+            books.forEach(book => {
+                const li = document.createElement("li");
+                li.innerText = `《書名:${book.name} - 作者:${book.author} - ISBN:(${book.ISBN})》`;
+                list.appendChild(li);
+            });
         });
     }
 </script>
