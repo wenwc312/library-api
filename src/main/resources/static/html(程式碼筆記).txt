@@ -1,7 +1,0 @@
-程式碼重點解釋
-● fetch()：JavaScript 內建用來發送 HTTP 請求的函式，等同於你之前用 curl 做的事，
-只是換成程式在瀏覽器裡自動發送
-● .then()：因為網路請求需要時間，fetch 是「非同步」的，.then() 表示「等結果回來之後要做的事」
-● response.text() vs response.json()：borrow/return 回傳的是純文字訊息用 .text()；
-available 回傳的是 JSON 陣列用 .json()
-● onclick="borrowBook()"：按鈕被點擊時觸發對應的 JavaScript 函式
