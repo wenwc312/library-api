@@ -21,7 +21,7 @@ public class LibraryController {
         return libraryService.availableBookList();
     }
 
-    @GetMapping("/serarch")
+    @GetMapping("/search")
     public List<Book> searchBook(@RequestParam String keyword){
         return libraryService.searchBook(keyword);
     }
