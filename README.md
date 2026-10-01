@@ -11,6 +11,7 @@
 - 還書:歸還已借閱的書籍
 - 查看可借閱書籍清單
 - 依書名、作者或ISBN搜尋書籍，並顯示借閱狀態
+- 查詢會員目前借閱書籍的清單
 
 ## 使用技術
 
@@ -22,12 +23,13 @@
 | 部署 | Docker、Render |
 
 ## API 一覽
-| 方法   | 路徑                            | 說明         |
-|------|-------------------------------|------------|
-| GET  | `/books/available`            | 取得可借閱書籍清單  |
-| GET  | `/books/search?keyword=`      | 依關鍵字搜尋書籍 |
-| POST | `/books/borrow?userId=&isbn=` | 借書 |
-| POST | `/books/return?userId=&isbm=` | 還書 |
+| 方法    | 路徑                            | 說明         |
+|-------|-------------------------------|------------|
+| GET   | `/books/available`            | 取得可借閱書籍清單  |
+| GET   | `/books/search?keyword=`      | 依關鍵字搜尋書籍 |
+| GET   | `/books/borrowedByMember?userId=` | 查詢會員借閱書籍清單 |
+| POST  | `/books/borrow?userId=&isbn=` | 借書 |
+| POST  | `/books/return?userId=&isbm=` | 還書 |
 
 ## 測試資料
 系統啟動時會自動建立以下資料

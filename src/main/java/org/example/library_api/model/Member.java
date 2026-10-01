@@ -14,6 +14,10 @@ public class Member {
         borrowedBooks = new ArrayList<>();
     }
 
+    public List<Book> getBorrowedBooks() {
+        return borrowedBooks;
+    }
+
     public void borrowBook(Book book) {
         borrowedBooks.add(book);
     }

@@ -33,6 +33,7 @@ public class LibraryService {
         allMembers.add(member);
     }
 
+    // 借書
     public String borrowBook(String userId,String ISBN) {
         for (Member member : allMembers) {
             if (member.getUserId().equals(userId)) {
@@ -40,15 +41,16 @@ public class LibraryService {
                     if(book.getISBN().equals(ISBN) && !book.isBorrowed()){
                         book.setBorrowed(true);
                         member.borrowBook(book);
-                        return "書籍借取完成";
+                        return "【書籍借取完成】";
                     }
                 }
-                return "查無書籍資料或書籍已被借閱";
+                return "【查無書籍資料或書籍已被借閱】";
             }
         }
-        return "查無會員資料";
+        return "【查無會員資料】";
     }
 
+    // 還書
     public String returnBook(String userId,String ISBN) {
         for (Member member : allMembers) {
             if (member.getUserId().equals(userId)) {
@@ -65,6 +67,7 @@ public class LibraryService {
         return "查無會員資料";
     }
 
+    // 可借閱的書籍清單
     public List<Book> availableBookList(){
         List<Book> borrowedList = new ArrayList<>();
         for (Book book:allBooks){
@@ -75,6 +78,7 @@ public class LibraryService {
         return borrowedList;
     }
 
+    // 查詢書籍狀態
     public List<Book> searchBook(String keyword) {
         List<Book> bookList = new ArrayList<>();
         for (Book book:allBooks){
@@ -83,5 +87,15 @@ public class LibraryService {
             }
         }
         return bookList;
+    }
+
+    // 查詢會員已借閱書籍清單
+    public List<Book> getMemberBorrowedBookList(String memberId) {
+        for(Member member : allMembers){
+            if (member.getUserId().equals(memberId)){
+                return member.getBorrowedBooks();
+            }
+        }
+        return null;
     }
 }
