@@ -27,6 +27,11 @@
 
 <div id="result"></div>
 
+<h2>搜尋書籍</h2>
+關鍵字(書名/作者/ISBN): <input type="text" id="searchKeyword">
+<button onclick="searchBook()">搜尋</button>
+<ul id="searchResult"></ul>
+
 <h2>可借閱書籍</h2>
 <button onclick="loadAvailableBooks()">重新整理清單</button>
 <ul id="bookList"></ul>
@@ -73,7 +78,7 @@
             list.innerHTML = "";
             books.forEach(book => {
                 const li = document.createElement("li");
-                li.innerText = `${book.name} - ${book.author} (${book.ISBN})`;
+                li.innerText = `《書名:${book.name} - 作者:${book.author} - ISBN:(${book.ISBN})》`;
                 list.appendChild(li);
             });
         });
@@ -81,6 +86,26 @@
 
     // 頁面一開啟就先載入一次清單
     loadAvailableBooks();
+
+    // 搜尋書籍
+    function searchBook(){
+        const keyword = document.getElementById("searchKeyword").value;
+        fetch(`${API_BASE}/search?keyword=${keyword}`)
+        .then(response => response.json())
+        .then(book => {
+            const list = document.getElementById("searchResult");
+            list.innerHTML = "";
+            if(book.length === 0){
+                list.innerHTML = "<li>查無符合的書籍</li>";
+            } else {
+                book.forEach(book => {
+                    const li = document.createElement("li");
+                    li.innerText = `《書名:${book.name} - 作者:${book.author} - ISBN:(${book.ISBN})》 狀態:${book.borrowed ? "[已借出]" : "[可借閱]"}`;
+                    list.appendChild(li);
+                });
+            }
+        });
+    }
 </script>
 </body>
 </html>
