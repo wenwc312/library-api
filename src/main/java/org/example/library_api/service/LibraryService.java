@@ -54,14 +54,14 @@ public class LibraryService {
     public String returnBook(String userId,String ISBN) {
         for (Member member : allMembers) {
             if (member.getUserId().equals(userId)) {
-                for (Book book : allBooks) {
-                    if (book.getISBN().equals(ISBN) && book.isBorrowed()) {
+                for (Book book : member.getBorrowedBooks()) {
+                    if (book.getISBN().equals(ISBN)) {
                         book.setBorrowed(false);
                         member.returnBook(book);
                         return "歸還書籍成功";
                     }
                 }
-                return "查無書籍資料或書籍尚未被借閱";
+                return "查無書籍資料或會員未借閱此書籍";
             }
         }
         return "查無會員資料";
