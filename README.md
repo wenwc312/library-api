@@ -71,13 +71,14 @@ src/main/java/org/example/library_api/
 ├── service/ # 商業邏輯
 └── model/ # 資料模型（Book、Member）
 src/main/resources/static/
-└── index.html # 前端頁面
+└── index.html # 借還書頁面
+└── admin.html # 管理頁面（新增書籍、會員）
 ```
 
 ## 未來規劃
 
-- [] 串接資料庫，讓資料在重啟後保留
+- [ ] 串接資料庫，讓資料在重啟後保留
 - [x] 新增會員與新增書籍功能
-- [] 美化前端介面
-- [] 管理頁面加上登入權限
-- [] 前端共用 JavaScript 抽成獨立檔案
+- [ ] 美化前端介面
+- [ ] 管理頁面加上登入權限
+- [ ] 前端共用 JavaScript 抽成獨立檔案
