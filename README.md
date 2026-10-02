@@ -1,4 +1,7 @@
 # 圖書館管理系統 Library API
+
+[![CI](https://github.com/wenwc312/library-api/actions/workflows/ci.yml/badge.svg)](https://github.com/wenwc312/library-api/actions)
+
 一個使用 Spring Boot 開發的簡易圖書館系統，提供借書、還書、查詢可借閱書籍及搜尋書籍功能，並附有網頁操作介面。
 
 🔗 **線上展示**：https://library-api-wsp0.onrender.com/index.html
