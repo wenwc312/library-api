@@ -2,6 +2,7 @@ package org.example.library_api.controller;
 
 import org.example.library_api.model.Book;
 import org.example.library_api.service.LibraryService;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -46,5 +47,18 @@ public class LibraryController {
         return libraryService.returnBook(userId,isbn);
     }
 
+    @PostMapping
+    public ResponseEntity<String> addBook(@RequestBody Book book){
+        if(isBlank(book.getName()) || isBlank(book.getAuthor()) ||  isBlank(book.getISBN())){
+            return ResponseEntity.badRequest().body("書名、作者、ISBN皆不可空白");
+        }
+        if(!libraryService.addNewBook(book)){
+            return ResponseEntity.status(HttpStatus.CONFLICT).body("ISBN 已存在");
+        }
+        return ResponseEntity.status(HttpStatus.CREATED).body("新增書籍成功");
+    }
 
+    private boolean isBlank(String value){
+        return value == null || value.isBlank();
+    }
 }

@@ -98,4 +98,27 @@ public class LibraryService {
         }
         return null;
     }
+
+    // 新增書籍
+    public boolean addNewBook(Book book) {
+        for (Book b:allBooks){
+            if(b.getISBN().equals(book.getISBN())){
+                return false;
+            }
+        }
+        book.setBorrowed(false);
+        allBooks.add(book);
+        return true;
+    }
+
+    // 新增會員
+    public boolean addNewMember(Member member) {
+        for(Member m: allMembers){
+            if (m.getUserId().equals(member.getUserId())){
+                return false;
+            }
+        }
+        allMembers.add(member);
+        return true;
+    }
 }

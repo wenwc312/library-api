@@ -12,6 +12,7 @@
 - 查看可借閱書籍清單
 - 依書名、作者或ISBN搜尋書籍，並顯示借閱狀態
 - 查詢會員目前借閱書籍的清單
+- 管理頁面:新增書籍、新增會員(防止重複的ISBN與會員編號)
 
 ## 使用技術
 
@@ -30,6 +31,9 @@
 | GET   | `/books/borrowedByMember?userId=` | 查詢會員借閱書籍清單 |
 | POST  | `/books/borrow?userId=&isbn=` | 借書 |
 | POST  | `/books/return?userId=&isbm=` | 還書 |
+| POST | `/books` | 新增書籍 |
+| POST | `/members` | 新增會員 |
+
 
 ## 測試資料
 系統啟動時會自動建立以下資料
@@ -57,6 +61,8 @@ cd library-api
 
 啟動後開啟瀏覽器前往 http://localhost:8080/index.html
 
+管理頁面網址:http://localhost:8080/admin.html
+
 ## 專案結構
 
 ```
@@ -71,5 +77,7 @@ src/main/resources/static/
 ## 未來規劃
 
 - [] 串接資料庫，讓資料在重啟後保留
-- [] 新增會員與新增書籍功能
+- [x] 新增會員與新增書籍功能
 - [] 美化前端介面
+- [] 管理頁面加上登入權限
+- [] 前端共用 JavaScript 抽成獨立檔案

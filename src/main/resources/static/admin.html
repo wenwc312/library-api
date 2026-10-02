@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <title>圖書館管理</title>
+    <style>
+        body { front-family: sans-serif; max-width: 600px; margin: 40px auto; }
+        input, button { padding: 6px; margin: 4px 0; }
+        .form{
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            max-width: 320px;
+        }
+        .form label{
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+        }
+        .form button{
+            align-self: flex-start;
+        }
+    </style>
+</head>
+<body>
+
+<a href="/index.html">← 回到借還書頁面</a>
+
+<h1>圖書館管理</h1>
+
+<h2>新增書籍</h2>
+<div class="form">
+    <label>書名: <input type="text" id="newBookName"></label>
+    <label>作者: <input type="text" id="newBookAuthor"></label>
+    <label>ISBN: <input type="text" id="newBookIsbn"></label>
+    <button onclick="addBook()">新增書籍</button>
+</div>
+<p id="addBookResult"></p>
+
+<h2>新增會員</h2>
+<div class="form">
+    <label>姓名: <input type="text" id="newMemberName"></label>
+    <label>會員編號: <input type="text" id="newMemberId"></label>
+    <button onclick="addMember()">新增會員</button>
+</div>
+<p id="addMemberResult"></p>
+
+<script>
+    const API_BASE = "/books";
+
+    // 新增書籍
+    function addBook(){
+        const book={
+            name: document.getElementById("newBookName").value,
+            author: document.getElementById("newBookAuthor").value,
+            ISBN: document.getElementById("newBookIsbn").value
+        };
+
+        fetch(API_BASE, {
+            method: "POST",
+            headers: {"Content-Type": "application/json"},
+            body: JSON.stringify(book)
+        })
+        .then(response => response.text())
+        .then(message => {
+            document.getElementById("addBookResult").innerText = message;
+        });
+    }
+
+    // 新增會員
+    function addMember() {
+        const member = {
+            name: document.getElementById("newMemberName").value,
+            userId: document.getElementById("newMemberId").value
+        };
+
+        fetch("/members", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(member)
+        })
+        .then(response => response.text())
+        .then(message => {
+            document.getElementById("addMemberResult").innerText = message;
+        });
+    }
+</script>
+</body>
+</html>

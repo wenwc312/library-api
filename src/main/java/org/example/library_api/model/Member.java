@@ -8,6 +8,10 @@ public class Member {
     private String userId;
     private List<Book> borrowedBooks;
 
+    public Member() {
+        borrowedBooks = new ArrayList<>();
+    }
+
     public Member(String name, String userId) {
         this.name = name;
         this.userId = userId;
@@ -32,5 +36,13 @@ public class Member {
 
     public void setUserId(String userId) {
         this.userId = userId;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 }
