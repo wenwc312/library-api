@@ -45,6 +45,8 @@
 </div>
 <p id="addMemberResult"></p>
 
+<button id="logoutButton">登出</button>
+
 <script>
     const API_BASE = "/books";
 
@@ -61,9 +63,11 @@
             headers: {"Content-Type": "application/json"},
             body: JSON.stringify(book)
         })
-        .then(response => response.text())
-        .then(message => {
-            document.getElementById("addBookResult").innerText = message;
+        .then(response => {
+            if(!checkLogin(response)) return;
+            return response.text().then(message => {
+                document.getElementById("addBookResult").innerText = message;
+            });
         });
     }
 
@@ -79,10 +83,30 @@
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify(member)
         })
-        .then(response => response.text())
-        .then(message => {
-            document.getElementById("addMemberResult").innerText = message;
+        .then(response => {
+            if(!checkLogin(response)) return;
+            return response.text().then(message => {
+                document.getElementById("addMemberResult").innerText = message;
+            });
         });
+    }
+
+    // 登出
+    document.getElementById("logoutButton").addEventListener("click", () =>{
+        fetch("/auth/logout", { method: "POST" })
+        .then(() => {
+            window.location.href = "/login.html";
+        });
+    });
+
+    // 檢查是否登入過期，過期就導回登入頁
+    function checkLogin(response){
+        if(response.status === 401){
+            alert("已登入過期，請重新登入");
+            window.location.href = "/login.html";
+            return false;
+        }
+        return true;
     }
 </script>
 </body>

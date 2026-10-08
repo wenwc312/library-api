@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <title>管理員登入</title>
+    <style>
+        body { font-family: sans-serif; max-width: 600px; margin: 40px auto; }
+        input, button { padding: 6px }
+        .form { display: flex; flex-direction: column; gap: 12px; max-width: 320px; }
+        .form label { display: flex; flex-direction: column; gap: 4px; }
+        .form button { align-self: flex-start; }
+    </style>
+</head>
+<body>
+
+<a href="/index.html">← 回到借還書頁面</a>
+
+<h1>管理員登入</h1>
+
+<form id="loginForm" class="form">
+    <label>帳號: <input type="text" id="username"></label>
+    <label>密碼: <input type="password" id="password"></label>
+    <button type="submit">登入</button>
+</form>
+<p id="loginRequest"></p>
+
+<script>
+    document.getElementById("loginForm").addEventListener("submit", event => {
+        event.preventDefault(); // 阻止表單預設的送出行為(會重新整理頁面)
+
+        const loginData = {
+            username: document.getElementById("username").value,
+            password: document.getElementById("password").value
+        };
+
+        fetch("/auth/login", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(loginData)
+        })
+        .then(response => {
+            if(response.ok){
+                window.location.href = "/admin.html"; //登入成功，跳轉到管理頁面
+                return;
+            }
+            return response.text().then(message => {
+                document.getElementById("loginUser").innerText = message;
+            });
+
+        });
+    });
+
+</script>
+</body>
+</html>
