@@ -38,7 +38,7 @@
 | POST | `/books` | 新增書籍(需登入)  |
 | POST | `/members` | 新增會員(需登入)  |
 | POST | `/auth/login` | 管理頁面登入 |
-| POST | `/auth/logout | 管理頁面登出 |
+| POST | `/auth/logout` | 管理頁面登出 |
 
 ## 測試資料
 系統啟動時會自動建立以下資料
