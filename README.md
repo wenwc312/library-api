@@ -15,7 +15,8 @@
 - 查看可借閱書籍清單
 - 依書名、作者或ISBN搜尋書籍，並顯示借閱狀態
 - 查詢會員目前借閱書籍的清單
-- 管理頁面:新增書籍、新增會員(防止重複的ISBN與會員編號)
+- 管理頁面:新增書籍、新增會員(防止重複的ISBN與會員編號)，登出按鈕
+- 管理頁登入頁面:進入管理頁面需要登入驗證，如果帳密錯誤或是直接進入管理頁面會導回登入頁，時間到期後會自動登出
 
 ## 使用技術
 
@@ -30,13 +31,14 @@
 | 方法    | 路徑                            | 說明         |
 |-------|-------------------------------|------------|
 | GET   | `/books/available`            | 取得可借閱書籍清單  |
-| GET   | `/books/search?keyword=`      | 依關鍵字搜尋書籍 |
+| GET   | `/books/search?keyword=`      | 依關鍵字搜尋書籍   |
 | GET   | `/books/borrowedByMember?userId=` | 查詢會員借閱書籍清單 |
-| POST  | `/books/borrow?userId=&isbn=` | 借書 |
-| POST  | `/books/return?userId=&isbm=` | 還書 |
-| POST | `/books` | 新增書籍 |
-| POST | `/members` | 新增會員 |
-
+| POST  | `/books/borrow?userId=&isbn=` | 借書         |
+| POST  | `/books/return?userId=&isbm=` | 還書         |
+| POST | `/books` | 新增書籍(需登入)  |
+| POST | `/members` | 新增會員(需登入)  |
+| POST | `/auth/login` | 管理頁面登入 |
+| POST | `/auth/logout | 管理頁面登出 |
 
 ## 測試資料
 系統啟動時會自動建立以下資料
@@ -83,5 +85,5 @@ src/main/resources/static/
 - [ ] 串接資料庫，讓資料在重啟後保留
 - [x] 新增會員與新增書籍功能
 - [ ] 美化前端介面
-- [ ] 管理頁面加上登入權限
+- [x] 管理頁面加上登入權限
 - [ ] 前端共用 JavaScript 抽成獨立檔案
