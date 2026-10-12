@@ -8,6 +8,9 @@
 
 > 使用Render免費部署方案，閒置一段時間後服務會修免，第一次開啟可能需要等待約1分鐘
 
+<img width="1889" height="821" alt="image" src="https://github.com/user-attachments/assets/a7cb4134-6e62-431a-ad46-2fd5b4dcf2d1" />
+
+
 ## 功能
 
 - 借書:輸入會員編號與ISBN借閱書籍
@@ -84,6 +87,7 @@ src/main/resources/static/
 
 - [ ] 串接資料庫，讓資料在重啟後保留
 - [x] 新增會員與新增書籍功能
-- [ ] 美化前端介面
+- [x] 美化前端介面
 - [x] 管理頁面加上登入權限
-- [ ] 前端共用 JavaScript 抽成獨立檔案
+- [x] 前端共用 JavaScript 抽成獨立檔案
+- [ ] 借還書API改用狀態碼
