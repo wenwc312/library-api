@@ -3,12 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <title>圖書館系統</title>
+    <link rel="stylesheet" href="/css/common.css">
     <style>
-        body { font-family: sans-serif; max-width: 600px; margin: 40px auto; }
-        input, button { padding: 6px margin: 4px 0; }
         #result { margin-top: 10px; color: #333; }
-        ul { padding-left: 20px; }
-        li { margin-bottom: 6px; }
     </style>
 </head>
 <body>
@@ -43,9 +40,8 @@
 
 <a href="/admin.html">前往管理頁面 →</a>
 
+<script src="/js/common.js"></script>
 <script>
-    const API_BASE = "/books"
-
     // 借書
     function borrowBook(){
         const userId = document.getElementById("borrowUserId").value;
@@ -81,13 +77,7 @@
         fetch(`${API_BASE}/available`)
         .then(response => response.json())
         .then(books => {
-            const list = document.getElementById("bookList");
-            list.innerHTML = "";
-            books.forEach(book => {
-                const li = document.createElement("li");
-                li.innerText = `《書名:${book.name} - 作者:${book.author} - ISBN:(${book.ISBN})》`;
-                list.appendChild(li);
-            });
+            renderBookList(document.getElementById("bookList"),books,"目前沒有可借閱的書籍");
         });
     }
 
@@ -99,18 +89,8 @@
         const keyword = document.getElementById("searchKeyword").value;
         fetch(`${API_BASE}/search?keyword=${keyword}`)
         .then(response => response.json())
-        .then(book => {
-            const list = document.getElementById("searchResult");
-            list.innerHTML = "";
-            if(book.length === 0){
-                list.innerHTML = "<li>查無符合的書籍</li>";
-            } else {
-                book.forEach(book => {
-                    const li = document.createElement("li");
-                    li.innerText = `《書名:${book.name} - 作者:${book.author} - ISBN:(${book.ISBN})》 狀態:${book.borrowed ? "[已借出]" : "[可借閱]"}`;
-                    list.appendChild(li);
-                });
-            }
+        .then(books => {
+            renderBookList(document.getElementById("searchResult"),books,"查無符合的書籍",true);
         });
     }
 
@@ -130,16 +110,7 @@
         .then(books => {
             if(books === null) return; // 查無會員，上面已經處理過了
 
-            list.innerHTML = "";
-            if(books.length === 0){
-                list.innerHTML = "<li>目前沒有借閱中的書籍</li>";
-                return;
-            }
-            books.forEach(book => {
-                const li = document.createElement("li");
-                li.innerText = `《書名:${book.name} - 作者:${book.author} - ISBN:(${book.ISBN})》`;
-                list.appendChild(li);
-            });
+            renderBookList(list,books,"目前沒有借閱中的書籍");
         });
     }
 </script>

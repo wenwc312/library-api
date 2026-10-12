@@ -1,0 +1,30 @@
+// 用 POST 送出 JSON 資料
+const API_BASE = "/books";
+
+function postJson(url, data) {
+    return fetch(url, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(data)
+    });
+}
+
+// 把書籍陣列顯示在清單裡
+function renderBookList(listElement, books, emptyMessage, showStatus = false) {
+    listElement.innerHTML = "";
+
+    if (books.length === 0) {
+        listElement.innerHTML = `<li>${emptyMessage}</li>`;
+        return;
+    }
+
+    books.forEach(book => {
+        const li = document.createElement("li");
+        let text = `《書名:${book.name} - 作者:${book.author} - ISBN:(${book.ISBN})》`;
+        if (showStatus) {
+            text += ` 狀態:${book.borrowed ? "[已借出]" : "[可借閱]"}`;
+        }
+        li.innerText = text;
+        listElement.appendChild(li);
+    });
+}
