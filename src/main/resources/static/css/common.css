@@ -1,0 +1,30 @@
+body {
+    front-family: sans-serif;
+    max-width: 600px;
+    margin: 40px auto;
+}
+
+input, button {
+    padding: 6px;
+    margin: 4px 0;
+}
+
+ul { padding-left: 20px; }
+li { margin-bottom: 6px; }
+
+.form{
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    max-width: 320px;
+}
+
+.form label{
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.form button{
+    align-self: flex-start;
+}

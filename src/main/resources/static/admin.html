@@ -3,24 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <title>圖書館管理</title>
-    <style>
-        body { front-family: sans-serif; max-width: 600px; margin: 40px auto; }
-        input, button { padding: 6px; margin: 4px 0; }
-        .form{
-            display: flex;
-            flex-direction: column;
-            gap: 12px;
-            max-width: 320px;
-        }
-        .form label{
-            display: flex;
-            flex-direction: column;
-            gap: 4px;
-        }
-        .form button{
-            align-self: flex-start;
-        }
-    </style>
+    <link rel="stylesheet" href="/css/common.css">
 </head>
 <body>
 
@@ -47,9 +30,8 @@
 
 <button id="logoutButton">登出</button>
 
+<script src="/js/common.js"></script>
 <script>
-    const API_BASE = "/books";
-
     // 新增書籍
     function addBook(){
         const book={
@@ -58,11 +40,7 @@
             ISBN: document.getElementById("newBookIsbn").value
         };
 
-        fetch(API_BASE, {
-            method: "POST",
-            headers: {"Content-Type": "application/json"},
-            body: JSON.stringify(book)
-        })
+        postJson(API_BASE,book)
         .then(response => {
             if(!checkLogin(response)) return;
             return response.text().then(message => {
@@ -78,11 +56,7 @@
             userId: document.getElementById("newMemberId").value
         };
 
-        fetch("/members", {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify(member)
-        })
+        postJson("/members",member)
         .then(response => {
             if(!checkLogin(response)) return;
             return response.text().then(message => {
@@ -102,7 +76,7 @@
     // 檢查是否登入過期，過期就導回登入頁
     function checkLogin(response){
         if(response.status === 401){
-            alert("已登入過期，請重新登入");
+            alert("登入已過期，請重新登入");
             window.location.href = "/login.html";
             return false;
         }
