@@ -1,30 +1,194 @@
+/* ===== 顏色與尺寸變數：想換配色只要改這裡 ===== */
+:root {
+    --color-primary: #2563eb;
+    --color-primary-hover: #1d4ed8;
+    --color-bg: #f3f4f6;
+    --color-card: #ffffff;
+    --color-text: #1f2937;
+    --color-muted: #6b7280;
+    --color-border: #d1d5db;
+    --color-success: #15803d;
+    --color-error: #b91c1c;
+    --radius: 8px;
+}
+
+/* 寬度計算包含 padding 和 border，排版比較好控制 */
+* {
+    box-sizing: border-box;
+}
+
 body {
-    front-family: sans-serif;
-    max-width: 600px;
-    margin: 40px auto;
+    margin: 0;
+    font-family: system-ui, "Microsoft JhengHei", "Noto Sans TC", sans-serif;
+    background: var(--color-bg);
+    color: var(--color-text);
+    line-height: 1.6;
 }
 
-input, button {
-    padding: 6px;
-    margin: 4px 0;
+/* ===== 版面 ===== */
+.container {
+    max-width: 720px;
+    margin: 0 auto;
+    padding: 24px 16px;
 }
 
-ul { padding-left: 20px; }
-li { margin-bottom: 6px; }
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 24px;
+}
+.header h1 {
+    margin: 0;
+    font-size: 1.6rem;
+}
 
-.form{
+.card {
+    background: var(--color-card);
+    border-radius: var(--radius);
+    padding: 20px;
+    margin-bottom: 20px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+}
+.card h2 {
+    margin-top: 0;
+    font-size: 1.2rem;
+}
+.footer {
+    margin-top: 24px;
+    text-align: center;
+}
+/* ===== 輸入框與按鈕 ===== */
+input {
+    padding: 8px 10px;
+    border: 1px solid var(--color-border);
+    border-radius: 6px;
+    font-size: 1rem;
+}
+input:focus {
+    outline: none;
+    border-color: var(--color-primary);
+    box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.2);
+}
+
+button {
+    padding: 8px 16px;
+    border: none;
+    border-radius: 6px;
+    background: var(--color-primary);
+    color: white;
+    font-size: 1rem;
+    cursor: pointer;
+}
+button:hover {
+    background: var(--color-primary-hover);
+}
+
+/* 次要按鈕：外框樣式，例如登出 */
+button.secondary {
+    background: transparent;
+    color: var(--color-primary);
+    border: 1px solid var(--color-primary);
+}
+button.secondary:hover {
+    background: rgba(37, 99, 235, 0.08);
+}
+
+a {
+    color: var(--color-primary);
+    text-decoration: none;
+}
+a:hover {
+    text-decoration: underline;
+}
+
+/* ===== 表單排版 ===== */
+/* 垂直表單：每個欄位一行（管理頁、登入頁） */
+.form {
     display: flex;
     flex-direction: column;
     gap: 12px;
     max-width: 320px;
 }
+.form button {
+    align-self: flex-start;
+}
 
-.form label{
+/* 水平表單：欄位排成一列（借還書、查詢） */
+.form-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    align-items: flex-end;
+    margin-bottom: 12px;
+}
+
+.form label,
+.form-row label {
     display: flex;
     flex-direction: column;
     gap: 4px;
+    font-size: 0.9rem;
+    color: var(--color-muted);
 }
 
-.form button{
-    align-self: flex-start;
+/* ===== 操作結果訊息 ===== */
+.message {
+    margin: 12px 0 0;
+    padding: 8px 12px;
+    border-radius: 6px;
+}
+.message:empty{
+    display: none; /* 沒有訊息時不顯示 */
+}
+.message.info{
+    background: #e5e7eb;
+}
+.message.success {
+    color: var(--color-success);
+    background: #dcfce7;
+}
+.message.error{
+    color: var(--color-error);
+    background: #fee2e2;
+}
+
+/* ===== 書籍清單 ===== */
+.book-list {
+    list-style: none;
+    padding: 0;
+    margin: 12px 0 0;
+}
+.book-list li {
+    padding: 10px 12px;
+    border-bottom: 1px solid var(--color-border);
+}
+.book-list li:last-child {
+    border-bottom: none;
+}
+
+/* ===== 手機版：螢幕寬度 600px 以下 ===== */
+@media (max-width: 600px) {
+    .header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 8px;
+    }
+    .form-row {
+        flex-direction: column;
+        align-items: stretch;
+    }
+    .form button,
+    .form-row button {
+        width: 100%;
+    }
+}
+
+/* 新訊息出現時撥放動畫 */
+@keyframes flash{
+    from { opacity: 0; transform: translateY(-4px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+.message.flash{
+    animation: flash 0.3s ease;
 }

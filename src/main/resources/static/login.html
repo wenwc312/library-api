@@ -2,21 +2,24 @@
 <html lang="zh-TW">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>管理員登入</title>
     <link rel="stylesheet" href="/css/common.css">
 </head>
 <body>
+<div class="container">
+    <a href="/index.html">← 回到借還書頁面</a>
 
-<a href="/index.html">← 回到借還書頁面</a>
-
-<h1>管理員登入</h1>
-
-<form id="loginForm" class="form">
-    <label>帳號: <input type="text" id="username"></label>
-    <label>密碼: <input type="password" id="password"></label>
-    <button type="submit">登入</button>
-</form>
-<p id="loginResult"></p>
+    <section>
+        <h1>管理員登入</h1>
+        <form id="loginForm" class="form">
+            <label>帳號: <input type="text" id="username"></label>
+            <label>密碼: <input type="password" id="password"></label>
+            <button type="submit">登入</button>
+        </form>
+        <p id="loginResult" class="message"></p>
+    </section>
+</div>
 
 <script src="/js/common.js"></script>
 <script>
@@ -35,7 +38,7 @@
                 return;
             }
             return response.text().then(message => {
-                document.getElementById("loginResult").innerText = message;
+                showMessage(document.getElementById("loginResult"),message,"error");
             });
 
         });

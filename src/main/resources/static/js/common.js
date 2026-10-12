@@ -28,3 +28,11 @@ function renderBookList(listElement, books, emptyMessage, showStatus = false) {
         listElement.appendChild(li);
     });
 }
+
+// 顯示操作結果
+function showMessage(element, message, type){
+    element.innerText = message;
+    element.className = "message " + type;
+    void element.offsetWidth; // 讓瀏覽器重新計算，動畫才能重新播放
+    element.classList.add("flash");
+}
