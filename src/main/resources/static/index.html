@@ -2,43 +2,58 @@
 <html lang="zh-TW">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>圖書館系統</title>
     <link rel="stylesheet" href="/css/common.css">
-    <style>
-        #result { margin-top: 10px; color: #333; }
-    </style>
 </head>
 <body>
+<div class="container">
+    <header class="header">
+        <h1>圖書館系統</h1>
+    </header>
 
-<h1>圖書館系統</h1>
+    <section class="card">
+        <h2>借書/還書</h2>
+        <div class="form-row">
+            <label>會員編號: <input type="text" id="borrowUserId"></label>
+            <label>書籍ISBN: <input type="text" id="borrowIsbn"></label>
+            <button onclick="borrowBook()">借書</button>
+        </div>
+        <div class="form-row">
+            <label>會員編號: <input type="text" id="returnUserId"></label>
+            <label>書籍ISBN: <input type="text" id="returnIsbn"></label>
+            <button onclick="returnBook()">還書</button>
+        </div>
+        <p id="result" class="message"></p>
+    </section>
 
-<h2>借書</h2>
-會員編號: <input type="text" id="borrowUserId">
-書籍ISBN: <input type="text" id="borrowIsbn">
-<button onclick="borrowBook()">借書</button>
+    <section class="card">
+        <h2>可借閱書籍</h2>
+        <button class="secondary" onclick="loadAvailableBooks()">重新整理清單</button>
+        <ul id="bookList" class="book-list"></ul>
+    </section>
 
-<h2>還書</h2>
-會員編號: <input type="text" id="returnUserId">
-書籍ISBN: <input type="text" id="returnIsbn">
-<button onclick="returnBook()">還書</button>
+    <section class="card">
+        <h2>查詢會員借閱清單</h2>
+        <div class="form-row">
+            <label>會員編號: <input type="text" id="queryUserId"></label>
+            <button class="secondary" onclick="loadBorrowedBooks()">查詢</button>
+        </div>
+        <ul id="borrowedList" class="book-list"></ul>
+    </section>
 
-<div id="result"></div>
-
-<h2>查詢會員借閱清單</h2>
-會員編號: <input type="text" id="queryUserId">
-<button onclick="loadBorrowedBooks()">查詢</button>
-<ul id="borrowedList"></ul>
-
-<h2>搜尋書籍</h2>
-關鍵字(書名/作者/ISBN): <input type="text" id="searchKeyword">
-<button onclick="searchBook()">搜尋</button>
-<ul id="searchResult"></ul>
-
-<h2>可借閱書籍</h2>
-<button onclick="loadAvailableBooks()">重新整理清單</button>
-<ul id="bookList"></ul>
-
-<a href="/admin.html">前往管理頁面 →</a>
+    <section class="card">
+        <h2>搜尋書籍</h2>
+        <div class="form-row">
+            <label>關鍵字(書名/作者/ISBN): <input type="text" id="searchKeyword"></label>
+            <button class="secondary" onclick="searchBook()">搜尋</button>
+        </div>
+        <ul id="searchResult" class="book-list"></ul>
+    </section>
+    <footer class="footer">
+        <a href="/admin.html">前往管理頁面 →</a>
+    </footer>
+</div>
 
 <script src="/js/common.js"></script>
 <script>
@@ -52,7 +67,10 @@
         })
         .then(response => response.text())
         .then(message => {
-            document.getElementById("result").innerText = message;
+            const result = document.getElementById("result");
+            const time = new Date().toLocaleTimeString();
+            result.innerText = `${userId} 借閱了 ${isbn}:${message} 【${time}】`;
+            showMessage(result,result.innerText,"info")
             loadAvailableBooks(); // 借完自動刷新清單
         });
     }
@@ -67,7 +85,10 @@
         })
         .then(response => response.text())
         .then(message => {
-            document.getElementById("result").innerText = message;
+            const result = document.getElementById("result");
+            const time = new Date().toLocaleTimeString();
+            result.innerText = `${userId} 歸還了 ${isbn}:${message} 【${time}】`;
+            showMessage(result,result.innerText,"info")
             loadAvailableBooks();
         });
     }

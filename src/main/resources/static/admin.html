@@ -2,33 +2,43 @@
 <html lang="zh-TW">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>圖書館管理</title>
     <link rel="stylesheet" href="/css/common.css">
 </head>
 <body>
+<div class="container">
+    <header class="header">
+        <h1>圖書館管理</h1>
+    </header>
 
-<a href="/index.html">← 回到借還書頁面</a>
+    <a href="/index.html">← 回到借還書頁面</a>
 
-<h1>圖書館管理</h1>
+    <section class="card">
+        <h2>新增書籍</h2>
+        <div class="form">
+            <label>書名: <input type="text" id="newBookName"></label>
+            <label>作者: <input type="text" id="newBookAuthor"></label>
+            <label>ISBN: <input type="text" id="newBookIsbn"></label>
+            <button onclick="addBook()">新增書籍</button>
+        </div>
+        <p id="addBookResult" class="message"></p>
+    </section>
 
-<h2>新增書籍</h2>
-<div class="form">
-    <label>書名: <input type="text" id="newBookName"></label>
-    <label>作者: <input type="text" id="newBookAuthor"></label>
-    <label>ISBN: <input type="text" id="newBookIsbn"></label>
-    <button onclick="addBook()">新增書籍</button>
+    <section class="card">
+        <h2>新增會員</h2>
+        <div class="form">
+            <label>姓名: <input type="text" id="newMemberName"></label>
+            <label>會員編號: <input type="text" id="newMemberId"></label>
+            <button onclick="addMember()">新增會員</button>
+        </div>
+        <p id="addMemberResult" class="message"></p>
+    </section>
+
+    <footer class="footer">
+        <button id="logoutButton" class="secondary">登出</button>
+    </footer>
 </div>
-<p id="addBookResult"></p>
-
-<h2>新增會員</h2>
-<div class="form">
-    <label>姓名: <input type="text" id="newMemberName"></label>
-    <label>會員編號: <input type="text" id="newMemberId"></label>
-    <button onclick="addMember()">新增會員</button>
-</div>
-<p id="addMemberResult"></p>
-
-<button id="logoutButton">登出</button>
 
 <script src="/js/common.js"></script>
 <script>
@@ -44,7 +54,7 @@
         .then(response => {
             if(!checkLogin(response)) return;
             return response.text().then(message => {
-                document.getElementById("addBookResult").innerText = message;
+                showMessage(document.getElementById("addBookResult"),message,response.ok ? "success" : "error");
             });
         });
     }
@@ -60,7 +70,7 @@
         .then(response => {
             if(!checkLogin(response)) return;
             return response.text().then(message => {
-                document.getElementById("addMemberResult").innerText = message;
+                showMessage(document.getElementById("addMemberResult"),message,response.ok ? "success" : "error");
             });
         });
     }
