@@ -31,19 +31,19 @@
 | 部署 | Docker、Render |
 
 ## API 一覽
-| 方法    | 路徑                            | 說明         |
-|-------|-------------------------------|------------|
-| GET   | `/books/available`            | 取得可借閱書籍清單  |
-| GET   | `/books/search?keyword=`      | 依關鍵字搜尋書籍   |
-| GET   | `/books/borrowedByMember?userId=` | 查詢會員借閱書籍清單 |
-| POST  | `/books/borrow?userId=&isbn=` | 借書         |
-| POST  | `/books/return?userId=&isbm=` | 還書         |
-| POST | `/books` | 新增書籍(需登入)  |
-| POST | `/members` | 新增會員(需登入)  |
-| POST | `/auth/login` | 管理頁面登入 |
-| POST | `/auth/logout` | 管理頁面登出 |
-| POST | `/books/borrow?userId=&isbn=` | 借書:成功(200)、查無會員或書籍(404)、書已被借閱(409) |
-| POST | `/books/return?userId=&isbn=` | 還書:成功(200)、查無會員(404)、會員為借閱此書(409) |
+| 方法    | 路徑                            | 說明                                              |
+|-------|-------------------------------|-------------------------------------------------|
+| GET   | `/books/available`            | 取得可借閱書籍清單                                       |
+| GET   | `/books/search?keyword=`      | 依關鍵字搜尋書籍                                        |
+| GET   | `/books/borrowedByMember?userId=` | 查詢會員借閱書籍清單                                      |
+| POST  | `/books/borrow?userId=&isbn=` | 借書                                              |
+| POST  | `/books/return?userId=&isbm=` | 還書                                              |
+| POST | `/books` | 新增書籍(需登入)                                       |
+| POST | `/members` | 新增會員(需登入)                                       |
+| POST | `/auth/login` | 管理頁面登入: 成功(200)、帳密錯誤(401)、同一IP連續失敗5次鎖定15分鐘(429) |
+| POST | `/auth/logout` | 管理頁面登出                                          |
+| POST | `/books/borrow?userId=&isbn=` | 借書:成功(200)、查無會員或書籍(404)、書已被借閱(409)              |
+| POST | `/books/return?userId=&isbn=` | 還書:成功(200)、查無會員(404)、會員為借閱此書(409)               |
 
 ## 測試資料
 系統啟動時會自動建立以下資料

@@ -25,7 +25,7 @@ public class AdminAuthInterceptor implements HandlerInterceptor {
             log.info("【登入】未登入進入管理頁面，導向登入頁");
             response.sendRedirect("/login.html"); //頁面，導向登入頁
         } else {
-            log.warn("【登入】未登入存取被拒: {} {}",request.getMethod(),request.getRequestURI());
+            log.warn("【登入】未登入存取被拒: {} {}，IP {}",request.getMethod(),request.getRequestURI(),request.getRemoteAddr());
             response.setStatus(HttpServletResponse.SC_UNAUTHORIZED); // API:回傳 401
             response.setContentType("text/plain;charset=UTF-8");
             response.getWriter().write("請先登入");
