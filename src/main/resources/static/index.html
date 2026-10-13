@@ -65,14 +65,11 @@
         fetch(`${API_BASE}/borrow?userId=${userId}&isbn=${isbn}`,{
             method: "POST"
         })
-        .then(response => response.text())
-        .then(message => {
-            const result = document.getElementById("result");
+        .then(response => response.text().then(message => {
             const time = new Date().toLocaleTimeString();
-            result.innerText = `${userId} 借閱了 ${isbn}:${message} 【${time}】`;
-            showMessage(result,result.innerText,"info")
+            showMessage(document.getElementById("result"),`${userId} 要求借閱 ${isbn}:${message} 【${time}】`,response.ok ? "success" : "error");
             loadAvailableBooks(); // 借完自動刷新清單
-        });
+        }));
     }
 
     // 還書
@@ -83,14 +80,11 @@
         fetch(`${API_BASE}/return?userId=${userId}&isbn=${isbn}`,{
             method: "POST"
         })
-        .then(response => response.text())
-        .then(message => {
-            const result = document.getElementById("result");
+        .then(response => response.text().then(message => {
             const time = new Date().toLocaleTimeString();
-            result.innerText = `${userId} 歸還了 ${isbn}:${message} 【${time}】`;
-            showMessage(result,result.innerText,"info")
+            showMessage(document.getElementById("result"),`${userId} 歸還 ${isbn}:${message} 【${time}】`,response.ok ? "success" : "error");
             loadAvailableBooks();
-        });
+        }));
     }
 
     // 查看可借閱書籍

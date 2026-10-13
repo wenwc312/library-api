@@ -142,17 +142,34 @@ a:hover {
     display: none; /* 沒有訊息時不顯示 */
 }
 .message.info{
+    content: "ℹ ";
+    color: var(--color-text);
     background: #e5e7eb;
+    border-left-color: #6b7280;
 }
-.message.success {
+.message.info::before{
+    content: "ℹ";
+    margin-right: 6px;
+}
+.message.success{
     color: var(--color-success);
-    background: #dcfce7;
+    background: oklch(82.8% 0.111 230.318);
+    border-left-color: #16a34a;
+}
+.message.success::before{
+    content: "✔";
+    margin-right: 6px;
 }
 .message.error{
+    content: "✖ ";
     color: var(--color-error);
     background: #fee2e2;
+    border-left-color: #dc2626;
 }
-
+.message.error::before{
+    content: "✖";
+    margin-right: 6px;
+}
 /* ===== 書籍清單 ===== */
 .book-list {
     list-style: none;
