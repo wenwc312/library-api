@@ -16,6 +16,20 @@ public class LoanApiTest {
     private MockMvc mockMvc;
 
     @Test
+    void 借書成功回傳200() throws Exception {
+        mockMvc.perform(post("/books/borrow").param("userId","U0001").param("isbn","s0001"))
+                .andExpect(status().isOk());
+    }
+
+    @Test
+    void 還書成功回傳200() throws Exception {
+        mockMvc.perform(post("/books/borrow").param("userId","U0001").param("isbn","s0002"))
+                .andExpect(status().isOk());
+        mockMvc.perform(post("/books/return").param("userId","U0001").param("isbn","s0002"))
+                .andExpect(status().isOk());
+    }
+
+    @Test
     void 借不存在的書回傳404() throws Exception{
         mockMvc.perform(post("/books/borrow").param("userId","U0001").param("isbn","s9999"))
                 .andExpect(status().isNotFound());

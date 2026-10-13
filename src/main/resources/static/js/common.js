@@ -36,3 +36,8 @@ function showMessage(element, message, type){
     void element.offsetWidth; // 讓瀏覽器重新計算，動畫才能重新播放
     element.classList.add("flash");
 }
+
+// 連線失敗時顯示提示
+function showNetworkError(element){
+    showMessage(element,"連線失敗，請確認網路或稍後再試","error");
+}
