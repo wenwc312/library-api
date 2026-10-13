@@ -17,7 +17,7 @@ class LibraryServiceTest {
 
     @Test
     void 借書成功後書籍不在可借閱清單(){
-        assertEquals("【書籍借取完成】",service.borrowBook("U0001","s0001"));
+        assertEquals(BorrowResult.SUCCESS,service.borrowBook("U0001","s0001"));
 
         boolean stillAvailable = service.availableBookList().stream()
                 .anyMatch(book -> book.getISBN().equals("s0001"));
@@ -27,7 +27,13 @@ class LibraryServiceTest {
     @Test
     void 已被借走的書不能再借(){
         service.borrowBook("U0001","s0001");
-        assertEquals("【查無書籍資料或書籍已被借閱】",service.borrowBook("U0002","s0001"));
+        assertEquals(BorrowResult.ALREADY_BORROWED,service.borrowBook("U0002","s0001"));
+    }
+
+    @Test
+    void 不能借不存在的書(){
+        service.borrowBook("U0001","9999");
+        assertEquals(BorrowResult.BOOK_NOT_FOUND,service.borrowBook("U0002","9999"));
     }
 
     @Test
@@ -36,9 +42,9 @@ class LibraryServiceTest {
         service.borrowBook("U0001","s0001");
         service.borrowBook("U0002","s0002");
 
-        assertEquals("查無書籍資料或會員未借閱此書籍",service.returnBook("U0002","s0001"));
+        assertEquals(ReturnResult.NOT_BORROWED_BY_MEMBER,service.returnBook("U0002","s0001"));
         assertEquals(1,service.getMemberBorrowedBookList("U0001").size());
-        assertEquals("歸還書籍成功",service.returnBook("U0001","s0001"));
+        assertEquals(ReturnResult.SUCCESS,service.returnBook("U0001","s0001"));
     }
 
     @Test

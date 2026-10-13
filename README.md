@@ -42,6 +42,8 @@
 | POST | `/members` | 新增會員(需登入)  |
 | POST | `/auth/login` | 管理頁面登入 |
 | POST | `/auth/logout` | 管理頁面登出 |
+| POST | `/books/borrow?userId=&isbn=` | 借書:成功(200)、查無會員或書籍(404)、書已被借閱(409) |
+| POST | `/books/return?userId=&isbn=` | 還書:成功(200)、查無會員(404)、會員為借閱此書(409) |
 
 ## 測試資料
 系統啟動時會自動建立以下資料
@@ -90,4 +92,5 @@ src/main/resources/static/
 - [x] 美化前端介面
 - [x] 管理頁面加上登入權限
 - [x] 前端共用 JavaScript 抽成獨立檔案
-- [ ] 借還書API改用狀態碼
+- [x] 借還書API改用狀態碼
+- [ ] 加入Log與前端錯誤處理
