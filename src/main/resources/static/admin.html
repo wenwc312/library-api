@@ -56,6 +56,9 @@
             return response.text().then(message => {
                 showMessage(document.getElementById("addBookResult"),message,response.ok ? "success" : "error");
             });
+        })
+        .catch(() => {
+            showNetworkError(document.getElementById("addBookResult"))
         });
     }
 
@@ -72,6 +75,9 @@
             return response.text().then(message => {
                 showMessage(document.getElementById("addMemberResult"),message,response.ok ? "success" : "error");
             });
+        })
+        .catch(() => {
+            showNetworkError(document.getElementById("addMemberResult"))
         });
     }
 
@@ -80,7 +86,8 @@
         fetch("/auth/logout", { method: "POST" })
         .then(() => {
             window.location.href = "/login.html";
-        });
+        })
+        .catch(() => alert("登出失敗，請確認網路連線"));
     });
 
     // 檢查是否登入過期，過期就導回登入頁

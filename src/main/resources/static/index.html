@@ -69,7 +69,8 @@
             const time = new Date().toLocaleTimeString();
             showMessage(document.getElementById("result"),`${userId} 要求借閱 ${isbn}:${message} 【${time}】`,response.ok ? "success" : "error");
             loadAvailableBooks(); // 借完自動刷新清單
-        }));
+        }))
+        .catch(() => showNetworkError(document.getElementById("result")));
     }
 
     // 還書
@@ -84,7 +85,8 @@
             const time = new Date().toLocaleTimeString();
             showMessage(document.getElementById("result"),`${userId} 歸還 ${isbn}:${message} 【${time}】`,response.ok ? "success" : "error");
             loadAvailableBooks();
-        }));
+        }))
+        .catch(() => showNetworkError(document.getElementById("result")));
     }
 
     // 查看可借閱書籍
@@ -93,6 +95,9 @@
         .then(response => response.json())
         .then(books => {
             renderBookList(document.getElementById("bookList"),books,"目前沒有可借閱的書籍");
+        })
+        .catch(() => {
+            document.getElementById("bookList").innerHTML = "<li>載入失敗，請稍後再試</li>"
         });
     }
 
@@ -106,6 +111,9 @@
         .then(response => response.json())
         .then(books => {
             renderBookList(document.getElementById("searchResult"),books,"查無符合的書籍",true);
+        })
+        .catch(() => {
+            document.getElementById("searchResult").innerHTML = "<li>載入失敗，請稍後再試</li>"
         });
     }
 
@@ -126,6 +134,9 @@
             if(books === null) return; // 查無會員，上面已經處理過了
 
             renderBookList(list,books,"目前沒有借閱中的書籍");
+        })
+        .catch(() => {
+            list.innerHTML = "<li>載入失敗，請稍後再試</li>"
         });
     }
 </script>

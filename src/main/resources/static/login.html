@@ -40,7 +40,9 @@
             return response.text().then(message => {
                 showMessage(document.getElementById("loginResult"),message,"error");
             });
-
+        })
+        .catch(() => {
+            showNetworkError(document.getElementById("loginResult"))
         });
     });
 
