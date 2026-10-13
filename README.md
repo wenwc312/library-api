@@ -93,4 +93,4 @@ src/main/resources/static/
 - [x] 管理頁面加上登入權限
 - [x] 前端共用 JavaScript 抽成獨立檔案
 - [x] 借還書API改用狀態碼
-- [ ] 加入Log與前端錯誤處理
+- [x] 加入Log與前端錯誤處理
