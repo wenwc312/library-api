@@ -10,6 +10,7 @@ import org.springframework.test.web.servlet.MockMvc;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.redirectedUrl;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -77,4 +78,34 @@ public class AdminAuthTest {
         mockMvc.perform(get("/books/available"))
                 .andExpect(status().isOk());
     }
+
+    @Test
+    void 登入失敗5次後被鎖定() throws Exception {
+        String wrongLogin = """
+                {"username":"testadmin","password":"wrong"}
+                """;
+
+        for(int i=0;i<4;i++){
+            mockMvc.perform(post("/auth/login")
+                            .with(request -> {request.setRemoteAddr("10.0.0.1"); return request;})
+                            .contentType(MediaType.APPLICATION_JSON)
+                            .content(wrongLogin))
+                    .andExpect(status().isUnauthorized());
+        }
+
+        // 第5次失敗，被鎖定
+        mockMvc.perform(post("/auth/login")
+                        .with(request -> {request.setRemoteAddr("10.0.0.1"); return request;})
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(wrongLogin))
+                .andExpect(status().isTooManyRequests());
+
+        // 鎖定中，就算密碼正確也不能登入
+        mockMvc.perform(post("/auth/login")
+                        .with(request -> {request.setRemoteAddr("10.0.0.1"); return request;})
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(LOGIN_JSON))
+                .andExpect(status().isTooManyRequests());
+    }
+
 }
