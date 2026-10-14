@@ -3,17 +3,18 @@ package org.example.library_api.service;
 import org.example.library_api.model.Book;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.transaction.annotation.Transactional;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+@SpringBootTest
+@Transactional
 class LibraryServiceTest {
-    private LibraryService service;
 
-    @BeforeEach
-    void setUp() {
-        // 每個測試開始前都建立新的 LibraryService，資料都是初始測試資料
-        service = new LibraryService();
-    }
+    @Autowired
+    private LibraryService service;
 
     @Test
     void 借書成功後書籍不在可借閱清單(){

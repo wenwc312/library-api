@@ -29,6 +29,7 @@
 | 前端 | HTML、CSS、JavaScript(fetch API) |
 | 建置工具 | Maven |
 | 部署 | Docker、Render |
+| 資料庫 | Spring Data JPA、SQL Server(本機開發)、H2(線上展示與測試) |
 
 ## API 一覽
 | 方法    | 路徑                            | 說明                                              |
@@ -63,11 +64,22 @@
 
 需要先安裝 Java 21。
 
+### 使用 H2 記憶體資料庫(不須安裝資料庫)
+
 ```bash
-git clone https://github.com/wenwc312/library-api.git
-cd library-api
 ./mvnw spring-boot:run
 ```
+
+資料在程式結束後會消失。
+
+### 使用 SQL Server(資料會保存)
+1. 建立資料庫: `CREATE DATEBASE library;`
+2. 建立登入帳號 `library_app`，並開啟 SQL Server 驗證模式 TCP/IP(埠號 1433)
+3. 設定環境變數後啟動:
+   - `SPRING_PROFILE_ACTIVE=local`
+   - `DB_PASSWORD=資料庫密碼`
+
+資料表會在第一次啟動時自動建立。
 
 啟動後開啟瀏覽器前往 http://localhost:8080/index.html
 
@@ -87,10 +99,12 @@ src/main/resources/static/
 
 ## 未來規劃
 
-- [ ] 串接資料庫，讓資料在重啟後保留
+- [x] 串接資料庫，讓資料在重啟後保留 (本機 SQL Server)
 - [x] 新增會員與新增書籍功能
 - [x] 美化前端介面
 - [x] 管理頁面加上登入權限
 - [x] 前端共用 JavaScript 抽成獨立檔案
 - [x] 借還書API改用狀態碼
 - [x] 加入Log與前端錯誤處理
+- [ ] 線上環境使用雲端資料庫 (Azure SQL Datebase)
+- [ ] 改用 Flyway 管理資料表變更

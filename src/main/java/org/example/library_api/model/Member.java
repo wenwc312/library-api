@@ -1,33 +1,27 @@
 package org.example.library_api.model;
 
+import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
+
 import java.util.ArrayList;
 import java.util.List;
 
+@Entity
+@Table(name = "members")
 public class Member {
+
     private String name;
+
+    @Id
     private String userId;
-    private List<Book> borrowedBooks;
 
     public Member() {
-        borrowedBooks = new ArrayList<>();
     }
 
     public Member(String name, String userId) {
         this.name = name;
         this.userId = userId;
-        borrowedBooks = new ArrayList<>();
-    }
-
-    public List<Book> getBorrowedBooks() {
-        return borrowedBooks;
-    }
-
-    public void borrowBook(Book book) {
-        borrowedBooks.add(book);
-    }
-
-    public void returnBook(Book book) {
-        borrowedBooks.remove(book);
     }
 
     public String getUserId() {
