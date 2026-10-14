@@ -1,10 +1,24 @@
 package org.example.library_api.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import jakarta.persistence.*;
+
+@Entity
+@Table(name = "books")
 public class Book {
+    @Column(nullable = false)
     private String name;
+
+    @Column(nullable = false)
     private String author;
+
+    @Id
     private String ISBN;
-    private boolean borrowed;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "borrowed_by")
+    @JsonIgnore
+    private Member borrowedBy;
 
     public Book() {
     }
@@ -13,7 +27,6 @@ public class Book {
         this.name = name;
         this.author = author;
         this.ISBN = ISBN;
-        this.borrowed = false;
     }
 
     public String getName() {
@@ -41,10 +54,14 @@ public class Book {
     }
 
     public boolean isBorrowed() {
-        return borrowed;
+        return borrowedBy!=null;
     }
 
-    public void setBorrowed(boolean borrowed) {
-        this.borrowed = borrowed;
+    public Member getBorrowedBy() {
+        return borrowedBy;
+    }
+
+    public void setBorrowedBy(Member borrowedBy) {
+        this.borrowedBy = borrowedBy;
     }
 }
